@@ -80,11 +80,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Veliora AI — Predictive Mental Wellness Co-Pilot" },
       { name: "description", content: "Veliora AI is the world's first predictive, offline-first mental wellness co-pilot. Detect stress, burnout, and emotional decline before it happens." },
       { name: "author", content: "Veliora AI" },
-      { property: "og:title", content: "Veliora AI — Predictive Mental Wellness" },
-      { property: "og:description", content: "Predict, prevent, and protect mental wellness — anywhere, even offline." },
+      { property: "og:title", content: "Veliora AI — Predictive Mental Wellness Co-Pilot" },
+      { property: "og:description", content: "Veliora AI is the world's first predictive, offline-first mental wellness co-pilot. Detect stress, burnout, and emotional decline before it happens." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Veliora AI — Predictive Mental Wellness Co-Pilot" },
+      { name: "twitter:description", content: "Veliora AI is the world's first predictive, offline-first mental wellness co-pilot. Detect stress, burnout, and emotional decline before it happens." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7b2f0423-9148-47d1-8a91-63668ce4e563/id-preview-8f128a7e--df2fdeb4-5f0f-4412-81ce-6f3650d32756.lovable.app-1780387786162.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7b2f0423-9148-47d1-8a91-63668ce4e563/id-preview-8f128a7e--df2fdeb4-5f0f-4412-81ce-6f3650d32756.lovable.app-1780387786162.png" },
     ],
     links: [
       {
