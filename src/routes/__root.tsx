@@ -77,11 +77,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Veliora AI — Predictive Mental Wellness Co-Pilot" },
+      { name: "description", content: "Veliora AI is the world's first predictive, offline-first mental wellness co-pilot. Detect stress, burnout, and emotional decline before it happens." },
+      { name: "author", content: "Veliora AI" },
+      { property: "og:title", content: "Veliora AI — Predictive Mental Wellness" },
+      { property: "og:description", content: "Predict, prevent, and protect mental wellness — anywhere, even offline." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
@@ -113,13 +113,20 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+import { SiteNav, SiteFooter } from "../components/SiteNav";
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="min-h-screen flex flex-col">
+        <SiteNav />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <SiteFooter />
+      </div>
     </QueryClientProvider>
   );
 }
