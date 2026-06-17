@@ -1,6 +1,7 @@
-import { Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { LogOut, Menu, X } from "lucide-react";
+import { getSession, signOut } from "@/lib/veliora-auth";
 
 const links = [
   { to: "/", label: "Home" },
