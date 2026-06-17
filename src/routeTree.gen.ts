@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TherapistRouteImport } from './routes/therapist'
 import { Route as SosRouteImport } from './routes/sos'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as DigitalTwinRouteImport } from './routes/digital-twin'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CommunityRouteImport } from './routes/community'
@@ -25,6 +26,11 @@ const TherapistRoute = TherapistRouteImport.update({
 const SosRoute = SosRouteImport.update({
   id: '/sos',
   path: '/sos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DigitalTwinRoute = DigitalTwinRouteImport.update({
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/community': typeof CommunityRoute
   '/dashboard': typeof DashboardRoute
   '/digital-twin': typeof DigitalTwinRoute
+  '/login': typeof LoginRoute
   '/sos': typeof SosRoute
   '/therapist': typeof TherapistRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/community': typeof CommunityRoute
   '/dashboard': typeof DashboardRoute
   '/digital-twin': typeof DigitalTwinRoute
+  '/login': typeof LoginRoute
   '/sos': typeof SosRoute
   '/therapist': typeof TherapistRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/community': typeof CommunityRoute
   '/dashboard': typeof DashboardRoute
   '/digital-twin': typeof DigitalTwinRoute
+  '/login': typeof LoginRoute
   '/sos': typeof SosRoute
   '/therapist': typeof TherapistRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/community'
     | '/dashboard'
     | '/digital-twin'
+    | '/login'
     | '/sos'
     | '/therapist'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/community'
     | '/dashboard'
     | '/digital-twin'
+    | '/login'
     | '/sos'
     | '/therapist'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/community'
     | '/dashboard'
     | '/digital-twin'
+    | '/login'
     | '/sos'
     | '/therapist'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   CommunityRoute: typeof CommunityRoute
   DashboardRoute: typeof DashboardRoute
   DigitalTwinRoute: typeof DigitalTwinRoute
+  LoginRoute: typeof LoginRoute
   SosRoute: typeof SosRoute
   TherapistRoute: typeof TherapistRoute
 }
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/sos'
       fullPath: '/sos'
       preLoaderRoute: typeof SosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/digital-twin': {
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   CommunityRoute: CommunityRoute,
   DashboardRoute: DashboardRoute,
   DigitalTwinRoute: DigitalTwinRoute,
+  LoginRoute: LoginRoute,
   SosRoute: SosRoute,
   TherapistRoute: TherapistRoute,
 }
