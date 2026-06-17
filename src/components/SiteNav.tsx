@@ -45,13 +45,16 @@ export function SiteNav() {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-3">
             <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
               <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
               Offline-ready
             </span>
-            <Link to="/dashboard" className="ml-3 px-4 py-2 rounded-full bg-aurora text-primary-foreground text-sm font-medium shadow-glow hover:opacity-95 transition-opacity">
-              Launch app
+            <Link to="/login" className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground rounded-md hover:bg-white/5">
+              Sign in
+            </Link>
+            <Link to="/login" className="px-4 py-2 rounded-full bg-aurora text-primary-foreground text-sm font-medium shadow-glow hover:opacity-95 transition-opacity">
+              Get started
             </Link>
           </div>
 

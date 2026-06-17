@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TherapistRouteImport } from './routes/therapist'
 import { Route as SosRouteImport } from './routes/sos'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DigitalTwinRouteImport } from './routes/digital-twin'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -26,6 +27,11 @@ const TherapistRoute = TherapistRouteImport.update({
 const SosRoute = SosRouteImport.update({
   id: '/sos',
   path: '/sos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/digital-twin': typeof DigitalTwinRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/sos': typeof SosRoute
   '/therapist': typeof TherapistRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/digital-twin': typeof DigitalTwinRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/sos': typeof SosRoute
   '/therapist': typeof TherapistRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/digital-twin': typeof DigitalTwinRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/sos': typeof SosRoute
   '/therapist': typeof TherapistRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/digital-twin'
     | '/login'
+    | '/onboarding'
     | '/sos'
     | '/therapist'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/digital-twin'
     | '/login'
+    | '/onboarding'
     | '/sos'
     | '/therapist'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/digital-twin'
     | '/login'
+    | '/onboarding'
     | '/sos'
     | '/therapist'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   DigitalTwinRoute: typeof DigitalTwinRoute
   LoginRoute: typeof LoginRoute
+  OnboardingRoute: typeof OnboardingRoute
   SosRoute: typeof SosRoute
   TherapistRoute: typeof TherapistRoute
 }
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/sos'
       fullPath: '/sos'
       preLoaderRoute: typeof SosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   DigitalTwinRoute: DigitalTwinRoute,
   LoginRoute: LoginRoute,
+  OnboardingRoute: OnboardingRoute,
   SosRoute: SosRoute,
   TherapistRoute: TherapistRoute,
 }
