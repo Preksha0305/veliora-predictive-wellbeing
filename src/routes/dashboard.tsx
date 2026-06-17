@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { Brain, Heart, Moon, Activity, Users, BookOpen, AlertTriangle, ArrowRight, Smile, Frown, Meh, Sparkles } from "lucide-react";
 import { Section, Eyebrow, Card, GradientRing, Sparkline, RiskBar, StatPill } from "../components/ui-bits";
+import { getSession, getOnboarding, type OnboardingData } from "@/lib/veliora-auth";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -13,13 +15,27 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 function Dashboard() {
+  const [name, setName] = useState("there");
+  const [onb, setOnb] = useState<OnboardingData | null>(null);
+  useEffect(() => {
+    const s = getSession();
+    if (s) {
+      setName(s.name.split(" ")[0] || "there");
+      setOnb(getOnboarding(s.userId));
+    }
+  }, []);
+
+  const today = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+  const moodLabel = onb?.mood ?? "Calm";
+  const sleepLabel = onb ? `${onb.sleepHours}h` : "6.8h";
+
   return (
     <Section className="py-12">
       <div className="flex items-end justify-between flex-wrap gap-4">
         <div>
-          <Eyebrow>Today · Tuesday, June 2</Eyebrow>
-          <h1 className="font-serif text-4xl md:text-5xl mt-2">Good morning, <span className="text-gradient">Aarav</span>.</h1>
-          <p className="text-muted-foreground mt-1">Your Digital Twin updated 4 minutes ago.</p>
+          <Eyebrow>Today · {today}</Eyebrow>
+          <h1 className="font-serif text-4xl md:text-5xl mt-2">Good to see you, <span className="text-gradient">{name}</span>.</h1>
+          <p className="text-muted-foreground mt-1">Your Digital Twin updated 4 minutes ago · feeling {moodLabel.toLowerCase()}.</p>
         </div>
         <Link to="/therapist" className="inline-flex items-center gap-2 rounded-full bg-aurora text-primary-foreground px-5 py-2.5 font-medium shadow-glow text-sm">
           Talk to Pocket Therapist <ArrowRight className="h-4 w-4" />
@@ -33,11 +49,12 @@ function Dashboard() {
           <div className="my-4"><GradientRing value={82} size={220} label="Flourishing" /></div>
           <div className="text-sm text-mint">+6 this week · stable trend</div>
           <div className="mt-4 grid grid-cols-3 gap-2 w-full text-xs">
-            <div className="rounded-lg bg-white/5 py-2">Mood<br/><span className="text-foreground font-medium">7.4</span></div>
-            <div className="rounded-lg bg-white/5 py-2">Sleep<br/><span className="text-foreground font-medium">6.8h</span></div>
+            <div className="rounded-lg bg-white/5 py-2">Mood<br/><span className="text-foreground font-medium">{moodLabel}</span></div>
+            <div className="rounded-lg bg-white/5 py-2">Sleep<br/><span className="text-foreground font-medium">{sleepLabel}</span></div>
             <div className="rounded-lg bg-white/5 py-2">Focus<br/><span className="text-foreground font-medium">82%</span></div>
           </div>
         </Card>
+
 
         <Card className="lg:col-span-2">
           <div className="flex items-center justify-between">
