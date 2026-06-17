@@ -118,6 +118,28 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 import { SiteNav, SiteFooter } from "../components/SiteNav";
+import { useRouterState, useNavigate } from "@tanstack/react-router";
+import { getSession, getOnboarding } from "../lib/veliora-auth";
+
+const PROTECTED = ["/dashboard", "/digital-twin", "/therapist", "/community", "/awareness", "/sos", "/onboarding"];
+
+function AuthGate() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  useEffect(() => {
+    const needsAuth = PROTECTED.some((p) => pathname === p || pathname.startsWith(p + "/"));
+    if (!needsAuth) return;
+    const session = getSession();
+    if (!session) {
+      navigate({ to: "/login" });
+      return;
+    }
+    if (pathname !== "/onboarding" && !getOnboarding(session.userId)) {
+      navigate({ to: "/onboarding" });
+    }
+  }, [pathname, navigate]);
+  return null;
+}
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
@@ -126,6 +148,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen flex flex-col">
         <SiteNav />
+        <AuthGate />
         <main className="flex-1">
           <Outlet />
         </main>

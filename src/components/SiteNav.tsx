@@ -1,6 +1,7 @@
-import { Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { LogOut, Menu, X } from "lucide-react";
+import { getSession, signOut } from "@/lib/veliora-auth";
 
 const links = [
   { to: "/", label: "Home" },
@@ -14,6 +15,15 @@ const links = [
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [session, setSession] = useState<ReturnType<typeof getSession>>(null);
+  useEffect(() => { setSession(getSession()); }, [pathname]);
+  function handleSignOut() {
+    signOut();
+    setSession(null);
+    navigate({ to: "/login" });
+  }
   return (
     <header className="sticky top-0 z-50">
       <div className="glass-strong border-b border-white/5">
@@ -50,12 +60,28 @@ export function SiteNav() {
               <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
               Offline-ready
             </span>
-            <Link to="/login" className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground rounded-md hover:bg-white/5">
-              Sign in
-            </Link>
-            <Link to="/login" className="px-4 py-2 rounded-full bg-aurora text-primary-foreground text-sm font-medium shadow-glow hover:opacity-95 transition-opacity">
-              Get started
-            </Link>
+            {session ? (
+              <>
+                <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-full glass">
+                  <div className="h-6 w-6 rounded-full bg-aurora grid place-items-center text-[11px] font-semibold text-primary-foreground">
+                    {session.name.trim().charAt(0).toUpperCase()}
+                  </div>
+                  <span className="text-xs text-foreground max-w-[120px] truncate">{session.name.split(" ")[0]}</span>
+                </div>
+                <button onClick={handleSignOut} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground rounded-md hover:bg-white/5">
+                  <LogOut className="h-3.5 w-3.5" /> Sign out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground rounded-md hover:bg-white/5">
+                  Sign in
+                </Link>
+                <Link to="/login" className="px-4 py-2 rounded-full bg-aurora text-primary-foreground text-sm font-medium shadow-glow hover:opacity-95 transition-opacity">
+                  Get started
+                </Link>
+              </>
+            )}
           </div>
 
           <button onClick={() => setOpen(!open)} className="lg:hidden p-2 rounded-md hover:bg-white/5">
