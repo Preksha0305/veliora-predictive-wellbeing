@@ -15,6 +15,8 @@ export const Route = createFileRoute("/sos")({
 });
 
 function SOS() {
+  const [name, setName] = useState("");
+  useEffect(() => { const s = getSession(); if (s) setName(s.name.split(" ")[0]); }, []);
   return (
     <Section className="py-12">
       <div className="rounded-3xl p-6 border border-coral/30 bg-gradient-to-br from-coral/15 to-coral/5 flex items-start gap-4">
@@ -22,14 +24,14 @@ function SOS() {
           <ShieldAlert className="h-5 w-5 text-coral" />
         </div>
         <div>
-          <div className="font-medium">If you're in immediate danger, please call your local emergency number now.</div>
+          <div className="font-medium">{name ? `${name}, if you're in immediate danger, please call your local emergency number now.` : "If you're in immediate danger, please call your local emergency number now."}</div>
           <div className="text-sm text-muted-foreground mt-1">Veliora's SOS Center works offline — every tool below is available without internet.</div>
         </div>
       </div>
 
       <div className="mt-8">
         <Eyebrow>Offline Crisis Mode™</Eyebrow>
-        <h1 className="font-serif text-4xl md:text-5xl mt-3">You're <span className="text-gradient">safe here.</span></h1>
+        <h1 className="font-serif text-4xl md:text-5xl mt-3">{name ? <>{name}, you're <span className="text-gradient">safe here.</span></> : <>You're <span className="text-gradient">safe here.</span></>}</h1>
       </div>
 
       <div className="grid md:grid-cols-3 gap-5 mt-8">
