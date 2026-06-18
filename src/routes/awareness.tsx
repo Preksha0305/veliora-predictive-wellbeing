@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { BookOpen, CheckCircle2, X, Trophy } from "lucide-react";
 import { Section, Eyebrow, Card } from "../components/ui-bits";
+import { getSession } from "@/lib/veliora-auth";
 
 export const Route = createFileRoute("/awareness")({
   head: () => ({
