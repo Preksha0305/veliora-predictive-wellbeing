@@ -30,10 +30,12 @@ const myths = [
 ];
 
 function Awareness() {
+  const [name, setName] = useState("");
+  useEffect(() => { const s = getSession(); if (s) setName(s.name.split(" ")[0]); }, []);
   return (
     <Section className="py-12">
       <Eyebrow>Awareness Hub 2.0</Eyebrow>
-      <h1 className="font-serif text-4xl md:text-5xl mt-3">Mental health, <span className="text-gradient">understood.</span></h1>
+      <h1 className="font-serif text-4xl md:text-5xl mt-3">{name ? <>{name}, mental health — <span className="text-gradient">understood.</span></> : <>Mental health, <span className="text-gradient">understood.</span></>}</h1>
       <p className="text-muted-foreground mt-2 max-w-2xl">Bite-sized learning paths, myth-busters, and challenges. Earn streaks. Build literacy.</p>
 
       {/* Learning paths */}
