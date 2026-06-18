@@ -23,12 +23,14 @@ const posts = [
 ];
 
 function Community() {
+  const [name, setName] = useState("");
+  useEffect(() => { const s = getSession(); if (s) setName(s.name.split(" ")[0]); }, []);
   return (
     <Section className="py-12">
       <div className="flex items-end justify-between flex-wrap gap-4">
         <div>
           <Eyebrow>Community Wellness Network™</Eyebrow>
-          <h1 className="font-serif text-4xl md:text-5xl mt-3">You're not <span className="text-gradient">alone</span> in this.</h1>
+          <h1 className="font-serif text-4xl md:text-5xl mt-3">{name ? <>You're not <span className="text-gradient">alone</span>, {name}.</> : <>You're not <span className="text-gradient">alone</span> in this.</>}</h1>
           <p className="text-muted-foreground mt-2 max-w-xl">Anonymous, AI-moderated peer support. Share, listen, recover — at your own pace.</p>
         </div>
         <button className="rounded-full bg-aurora text-primary-foreground px-5 py-2.5 text-sm font-medium shadow-glow">Share anonymously</button>
